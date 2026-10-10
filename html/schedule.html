@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#07182c">
+  <title>Расписание</title>
+  <link rel="icon" href="../img/favicon.ico" type="image/x-icon">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Unbounded:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css?v=7">
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand brand-zgu" href="main.html">
+        <img class="logo-zgu" src="../img/ZGU-logo.png" alt="ЗГУ">
+        <span>Заполярный государственный университет им. Н.М. Федоровского</span>
+      </a>
+      <div class="header-center" id="download-slot">
+        <a class="download" id="download-link" hidden>Скачать таблицу</a>
+      </div>
+      <a class="brand brand-isit" href="main.html">
+        <img class="logo-isit" src="../img/ISIT-logo.png" alt="ИСИТ">
+      </a>
+    </div>
+  </header>
+
+  <main class="page page-wide">
+    <section id="gate" class="message" hidden>
+      <h1>Расписание</h1>
+      <p>Сначала выберите уровень, форму и факультет на главной.</p>
+      <p><a class="text-link" href="main.html">На главную</a></p>
+    </section>
+    <section id="broken" class="message" hidden>
+      <h1>Расписание не загрузилось</h1>
+      <p>Проверьте файл schedule.js: при ошибке в скобках или запятых таблица не строится.</p>
+    </section>
+    <section id="board" hidden>
+      <div class="board-head">
+        <p class="eyebrow">Осенний семестр</p>
+        <h1 id="board-title"></h1>
+      </div>
+      <div class="faculty-tabs" role="tablist" aria-label="Факультет">
+        <button class="faculty-tab" type="button" role="tab" data-faculty="feeiu" aria-selected="false">
+          <span class="faculty-code">ФЭЭиУ</span>
+          <span class="faculty-name">Электроэнергетика, экономика и управление</span>
+        </button>
+        <button class="faculty-tab" type="button" role="tab" data-faculty="gtf" aria-selected="false">
+          <span class="faculty-code">ГТФ</span>
+          <span class="faculty-name">Горно-технологический факультет</span>
+        </button>
+      </div>
+      <div class="toolbar">
+        <div class="toolbar-line">
+          <p class="week-note week-date" id="week-date"></p>
+          <div class="course-picker">
+            <p class="field-label" id="course-label">Курс</p>
+            <div class="course-menu" id="course-menu" role="group" aria-labelledby="course-label"></div>
+          </div>
+          <div class="week-count-wrap">
+            <button class="week-step" id="week-prev" type="button" aria-label="Предыдущая учебная неделя">‹</button>
+            <p class="week-note week-count" id="week-count"></p>
+            <button class="week-step" id="week-next" type="button" aria-label="Следующая учебная неделя">›</button>
+          </div>
+        </div>
+        <div class="week-row">
+          <span class="week-label is-active" id="odd-label">Нечётная</span>
+          <button class="switch" id="week-switch" type="button" role="switch" aria-checked="false" aria-label="Переключить чётность недели"></button>
+          <span class="week-label" id="even-label">Чётная</span>
+        </div>
+        <ul class="legend">
+          <li><i class="dot dot-lecture"></i>Лекция</li>
+          <li><i class="dot dot-practice"></i>Практика</li>
+          <li><i class="dot dot-lab"></i>Лабораторная</li>
+        </ul>
+      </div>
+      <p id="empty-note" class="message" hidden></p>
+      <div class="table-wrap" id="table-wrap" hidden></div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <a href="about.html">О сайте</a>
+  </footer>
+  <script src="../schedule/schedule.js?v=5"></script>
+  <script src="../js/schedule-page.js?v=2"></script>
+</body>
+</html>

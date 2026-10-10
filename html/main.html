@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#07182c">
+  <title>Расписание - кафедра ИСИТ</title>
+  <link rel="icon" href="../img/favicon.ico" type="image/x-icon">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Unbounded:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css?v=7">
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand brand-zgu" href="main.html">
+        <img class="logo-zgu" src="../img/ZGU-logo.png" alt="ЗГУ">
+        <span>Заполярный государственный университет им. Н.М. Федоровского</span>
+      </a>
+      <div class="header-center"></div>
+      <a class="brand brand-isit" href="main.html">
+        <img class="logo-isit" src="../img/ISIT-logo.png" alt="ИСИТ">
+      </a>
+    </div>
+  </header>
+
+  <main class="page">
+    <section class="hero">
+      <p class="eyebrow">Кафедра ИСИТ</p>
+      <h1>Расписание занятий</h1>
+      <p class="lede">Заполярный государственный университет им. Н. М. Федоровского. Уровень, форма и факультет открывают таблицу своей группы.</p>
+    </section>
+
+    <section class="step" aria-labelledby="level-title">
+      <h2 id="level-title">Уровень подготовки</h2>
+      <div class="level-grid">
+        <button class="choice" type="button" data-level="bachelor" aria-pressed="false">
+          <span class="choice-index">01</span>
+          <h3>Бакалавриат и специалитет</h3>
+          <p>Курсы с первого по шестой</p>
+        </button>
+        <button class="choice" type="button" data-level="master" aria-pressed="false">
+          <span class="choice-index">02</span>
+          <h3>Магистратура</h3>
+          <p>Только курсы из расписания</p>
+        </button>
+      </div>
+    </section>
+
+    <section class="step" id="forms" hidden aria-labelledby="form-title">
+      <h2 id="form-title">Форма обучения</h2>
+      <div class="form-grid">
+        <button class="choice" type="button" data-form="fulltime" aria-pressed="false">
+          <span class="choice-index">Оч</span>
+          <h3>Очная</h3>
+          <p>Дневное расписание</p>
+        </button>
+        <button class="choice" type="button" data-form="mixed" aria-pressed="false">
+          <span class="choice-index">Оз</span>
+          <h3>Очно-заочная</h3>
+          <p>Вечерние и субботние пары</p>
+        </button>
+        <button class="choice" type="button" data-form="distance" aria-pressed="false">
+          <span class="choice-index">Зо</span>
+          <h3>Заочная</h3>
+          <p>Группы заочной формы</p>
+        </button>
+      </div>
+    </section>
+
+    <section class="step" id="faculties" hidden aria-labelledby="faculty-title">
+      <h2 id="faculty-title">Факультет</h2>
+      <div class="level-grid">
+        <a class="choice" data-faculty="feeiu" href="schedule.html">
+          <span class="choice-index">01</span>
+          <h3>ФЭЭиУ</h3>
+          <p>Электроэнергетика, экономика и управление</p>
+        </a>
+        <a class="choice" data-faculty="gtf" href="schedule.html">
+          <span class="choice-index">02</span>
+          <h3>ГТФ</h3>
+          <p>Горно-технологический факультет</p>
+        </a>
+      </div>
+    </section>
+    <noscript>
+      <p class="message">Выбор уровня, формы и факультета работает через JavaScript в браузере. Включите его и откройте страницу снова.</p>
+    </noscript>
+  </main>
+
+  <footer class="site-footer">
+    <a href="about.html">О сайте</a>
+  </footer>
+  <script src="../js/main.js?v=2"></script>
+</body>
+</html>
