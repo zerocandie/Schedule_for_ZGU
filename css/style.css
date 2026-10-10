@@ -369,6 +369,32 @@ h1 {
   backdrop-filter: blur(10px);
 }
 
+.notice-banner {
+  margin: 16px 0 0;
+  padding: 14px 18px;
+  border: 1px solid rgba(138, 90, 18, 0.28);
+  border-radius: 18px;
+  background: #fff6df;
+  color: #6b4710;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.notice-banner a {
+  color: #8a4e08;
+  font-weight: 800;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.notice-banner a:not([href]) {
+  color: inherit;
+  font-weight: inherit;
+  text-decoration: none;
+  pointer-events: none;
+}
+
 .toolbar-line {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
@@ -744,7 +770,31 @@ h1 {
   box-shadow: var(--shadow);
 }
 
-.article h1 { font-size: clamp(32px, 4vw, 46px); }
+.article h1 {
+  max-width: none;
+  font-size: clamp(32px, 4vw, 46px);
+}
+
+.people {
+  margin: 4px 0 8px;
+  padding: 0;
+  list-style: none;
+}
+
+.people li {
+  padding: 12px 0;
+  border-top: 1px solid rgba(12, 40, 70, 0.1);
+  color: var(--navy);
+  font-size: 17px;
+  font-weight: 800;
+}
+
+.people li:last-child { border-bottom: 1px solid rgba(12, 40, 70, 0.1); }
+
+.article .disclaimer {
+  color: var(--muted);
+  font-size: 14px;
+}
 
 .article p {
   color: var(--ink);
@@ -769,17 +819,43 @@ h1 {
 .text-link:focus-visible { text-decoration: underline; }
 
 .site-footer {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px 28px;
+  width: 100%;
   margin-top: auto;
+  padding: 16px max(16px, calc((100% - 1180px) / 2)) 20px;
   border-top: 1px solid rgba(12, 40, 70, 0.08);
-  text-align: center;
 }
 
 .site-footer a {
-  display: inline-block;
-  padding: 18px;
   color: var(--muted);
   font-weight: 800;
   text-decoration: none;
+}
+
+.footer-aside {
+  margin-left: auto;
+  text-align: right;
+}
+
+.footer-org,
+.footer-note { margin: 0; }
+
+.footer-org {
+  color: var(--navy);
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.footer-note {
+  margin-top: 4px;
+  max-width: 420px;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.35;
 }
 
 .site-footer a:hover,
@@ -847,7 +923,17 @@ h1 {
 
   .article { margin-top: 20px; padding: 22px 18px; }
 
-  .site-footer { padding-bottom: env(safe-area-inset-bottom); }
+  .site-footer {
+    flex-direction: column;
+    align-items: stretch;
+    padding-right: 10px;
+    padding-bottom: calc(16px + env(safe-area-inset-bottom));
+    padding-left: 10px;
+  }
+
+  .footer-aside { text-align: right; }
+
+  .footer-note { margin-left: auto; }
 }
 
 @media (max-width: 860px) {

@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Unbounded:wght@500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../css/style.css?v=7">
+  <link rel="stylesheet" href="../css/style.css?v=11">
 </head>
 <body>
   <header class="site-header">
@@ -21,7 +21,7 @@
       <div class="header-center" id="download-slot">
         <a class="download" id="download-link" hidden>Скачать таблицу</a>
       </div>
-      <a class="brand brand-isit" href="main.html">
+      <a class="brand brand-isit" href="isit.html">
         <img class="logo-isit" src="../img/ISIT-logo.png" alt="ИСИТ">
       </a>
     </div>
@@ -76,6 +76,7 @@
           <li><i class="dot dot-lab"></i>Лабораторная</li>
         </ul>
       </div>
+      <p class="notice-banner">Внимание! Отображение расписания на сайте находится в стадии разработки и согласования. Настоятельно рекомендуем периодически перепроверять расписание при помощи <a class="text-link" id="excel-link">оригинального формата Excel-файла</a> расписания.</p>
       <p id="empty-note" class="message" hidden></p>
       <div class="table-wrap" id="table-wrap" hidden></div>
     </section>
@@ -83,8 +84,12 @@
 
   <footer class="site-footer">
     <a href="about.html">О сайте</a>
+    <div class="footer-aside">
+      <p class="footer-org">ЗГУ, Кафедра ИСиТ</p>
+      <p class="footer-note">Сайт не является официальным интернет-ресурсом университета</p>
+    </div>
   </footer>
   <script src="../schedule/schedule.js?v=5"></script>
-  <script src="../js/schedule-page.js?v=2"></script>
+  <script src="../js/schedule-page.js?v=3"></script>
 </body>
 </html>

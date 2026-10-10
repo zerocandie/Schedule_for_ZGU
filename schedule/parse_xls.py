@@ -1,5 +1,5 @@
 # Собирает schedule.js из xls в папке «Осень 2026-27 расписание».
-# Сессионные xlsx — консультации и экзамены по датам, в недельную таблицу не входят.
+# Сессионные xlsx - консультации и экзамены по датам, в недельную таблицу не входят.
 
 import json
 import os
@@ -30,11 +30,12 @@ DAYS = (
 )
 
 PAIRS = [8 * 60 + 40, 10 * 60 + 20, 12 * 60 + 10, 13 * 60 + 50, 15 * 60 + 30, 17 * 60 + 10, 18 * 60 + 50, 20 * 60 + 30]
-TIME_RE = re.compile(r"(\d{1,2})[.:](\d{2})(?::\d{2})?\s*[-–—]\s*(\d{1,2})[.:](\d{2})")
+EM = "\u2014"
+TIME_RE = re.compile(r"(\d{1,2})[.:](\d{2})(?::\d{2})?\s*[-–" + EM + r"]\s*(\d{1,2})[.:](\d{2})")
 TEACHER_RE = re.compile(
     r"Вакансия|[А-ЯЁ][а-яё]{2,}(?:-[А-ЯЁ][а-яё]+)?\s+[А-ЯЁ]\.(?:\s*[А-ЯЁ]\.?)?"
 )
-WEEK_RE = re.compile(r"№\s*н(?:ед)?\.?\s*([0-9][0-9,\-\s–—]*)", re.I)
+WEEK_RE = re.compile(r"№\s*н(?:ед)?\.?\s*([0-9][0-9,\-\s–" + EM + r"]*)", re.I)
 
 
 def norm(value):
@@ -68,7 +69,7 @@ def parse_clock(text):
         label = "{:02d}:{:02d}–{:02d}:{:02d}".format(
             int(match.group(1)), int(match.group(2)), int(match.group(3)), int(match.group(4))
         )
-        bucket = dotted if "." in match.group(0).split("-")[0].split("–")[0].split("—")[0] else other
+        bucket = dotted if "." in match.group(0).split("-")[0].split("–")[0].split(EM)[0] else other
         bucket.append((label, start))
     found = dotted or other
     return found[-1] if found else None
@@ -83,7 +84,7 @@ def pair_number(minutes):
 
 def week_list(spec):
     weeks = []
-    for part in re.split(r"[,;]", spec.replace("–", "-").replace("—", "-")):
+    for part in re.split(r"[,;]", spec.replace("–", "-").replace(EM, "-")):
         part = part.strip()
         span = re.match(r"(\d+)\s*-\s*(\d+)$", part)
         if span:
@@ -146,7 +147,7 @@ def study_week(year, month, day):
 def extract_notes(text):
     notes = []
     patterns = (
-        r"\d{2}\.\d{2}\.\d{4}\.?\s*[-–—]?\s*(?:перенос\s+на\s+\d{2}\.\d{2}\.\d{4}\.?)?",
+        r"\d{2}\.\d{2}\.\d{4}\.?\s*[-–" + EM + r"]?\s*(?:перенос\s+на\s+\d{2}\.\d{2}\.\d{4}\.?)?",
         r"пары нет",
         r"с\s+\d{1,2}[.:]\d{2}",
     )
@@ -160,7 +161,7 @@ def extract_notes(text):
         cleaned = cleaned.replace(note, " ")
     tidy = []
     for note in notes:
-        note = re.sub(r"\s*[-–—]\s*$", "", note).strip(" .;")
+        note = re.sub(r"\s*[-–" + EM + r"]\s*$", "", note).strip(" .;")
         if note and note not in tidy:
             tidy.append(note)
     return norm(cleaned), "; ".join(tidy)

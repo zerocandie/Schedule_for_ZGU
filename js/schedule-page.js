@@ -42,11 +42,18 @@
   board.hidden = false;
 
   var download = document.getElementById("download-link");
+  var excelLink = document.getElementById("excel-link");
   var filePath = data.downloads && data.downloads[level] && data.downloads[level][form];
   if (filePath) {
-    download.href = new URL(filePath, document.baseURI).href;
-    download.setAttribute("download", filePath.split("/").pop());
+    var fileUrl = new URL(filePath, document.baseURI).href;
+    var fileName = filePath.split("/").pop();
+    download.href = fileUrl;
+    download.setAttribute("download", fileName);
     download.hidden = false;
+    if (excelLink) {
+      excelLink.href = fileUrl;
+      excelLink.setAttribute("download", fileName);
+    }
   }
 
   var courseMenu = document.getElementById("course-menu");
@@ -204,7 +211,7 @@
     if (!calendar || viewedWeek === null) return;
     var parity = viewedWeek % 2 === 0 ? "чётная" : "нечётная";
     weekDate.textContent = calendar.dateLabel;
-    weekCount.textContent = viewedWeek + "-я учебная неделя — " + parity;
+    weekCount.textContent = viewedWeek + "-я учебная неделя - " + parity;
   }
 
   function lessonVisible(lesson) {
@@ -275,7 +282,7 @@
   }
 
   // studyWeekNumber считает учебную неделю от 1 сентября.
-  // Неделя 1 — с 1 сентября до ближайшего воскресенья, дальше понедельник–воскресенье.
+  // Неделя 1 - с 1 сентября до ближайшего воскресенья, дальше понедельник-воскресенье.
   // До 1 сентября берётся 1 сентября прошлого учебного года, в январе отсчёт не сбрасывается.
   function studyWeekNumber(year, month, day) {
     var startYear = month >= 9 ? year : year - 1;
