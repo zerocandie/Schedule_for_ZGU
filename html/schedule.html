@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Unbounded:wght@500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../css/style.css?v=11">
+  <link rel="stylesheet" href="../css/style.css?v=12">
 </head>
 <body>
   <header class="site-header">
@@ -42,43 +42,53 @@
         <p class="eyebrow">Осенний семестр</p>
         <h1 id="board-title"></h1>
       </div>
-      <div class="faculty-tabs" role="tablist" aria-label="Факультет">
-        <button class="faculty-tab" type="button" role="tab" data-faculty="feeiu" aria-selected="false">
-          <span class="faculty-code">ФЭЭиУ</span>
-          <span class="faculty-name">Электроэнергетика, экономика и управление</span>
-        </button>
-        <button class="faculty-tab" type="button" role="tab" data-faculty="gtf" aria-selected="false">
-          <span class="faculty-code">ГТФ</span>
-          <span class="faculty-name">Горно-технологический факультет</span>
-        </button>
-      </div>
-      <div class="toolbar">
-        <div class="toolbar-line">
-          <p class="week-note week-date" id="week-date"></p>
-          <div class="course-picker">
-            <p class="field-label" id="course-label">Курс</p>
-            <div class="course-menu" id="course-menu" role="group" aria-labelledby="course-label"></div>
+      <div class="board-layout">
+        <aside class="filter-rail" aria-label="Фильтры расписания">
+          <div class="faculty-tabs" role="tablist" aria-label="Факультет">
+            <button class="faculty-tab" type="button" role="tab" data-faculty="feeiu" aria-selected="false">
+              <span class="faculty-code">ФЭЭиУ</span>
+              <span class="faculty-name">Электроэнергетика, экономика и управление</span>
+            </button>
+            <button class="faculty-tab" type="button" role="tab" data-faculty="gtf" aria-selected="false">
+              <span class="faculty-code">ГТФ</span>
+              <span class="faculty-name">Горно-технологический факультет</span>
+            </button>
           </div>
-          <div class="week-count-wrap">
-            <button class="week-step" id="week-prev" type="button" aria-label="Предыдущая учебная неделя">‹</button>
-            <p class="week-note week-count" id="week-count"></p>
-            <button class="week-step" id="week-next" type="button" aria-label="Следующая учебная неделя">›</button>
+          <div class="toolbar">
+            <div class="toolbar-line">
+              <p class="week-note week-date" id="week-date"></p>
+              <div class="course-picker">
+                <p class="field-label" id="course-label">Курс</p>
+                <div class="course-menu" id="course-menu" role="group" aria-labelledby="course-label"></div>
+              </div>
+              <div class="week-count-wrap">
+                <button class="week-step" id="week-prev" type="button" aria-label="Предыдущая учебная неделя">‹</button>
+                <p class="week-note week-count" id="week-count"></p>
+                <button class="week-step" id="week-next" type="button" aria-label="Следующая учебная неделя">›</button>
+              </div>
+            </div>
+            <div class="group-picker" id="group-picker" hidden>
+              <p class="field-label" id="group-label">Группа</p>
+              <div class="course-menu" id="group-menu" role="group" aria-labelledby="group-label"></div>
+            </div>
+            <div class="week-row">
+              <span class="week-label is-active" id="odd-label">Нечётная</span>
+              <button class="switch" id="week-switch" type="button" role="switch" aria-checked="false" aria-label="Переключить чётность недели"></button>
+              <span class="week-label" id="even-label">Чётная</span>
+            </div>
+            <ul class="legend">
+              <li><i class="dot dot-lecture"></i>Лекция</li>
+              <li><i class="dot dot-practice"></i>Практика</li>
+              <li><i class="dot dot-lab"></i>Лабораторная</li>
+            </ul>
           </div>
+        </aside>
+        <div class="board-schedule">
+          <p class="notice-banner">Внимание! Отображение расписания на сайте находится в стадии разработки и согласования. Настоятельно рекомендуем периодически перепроверять расписание при помощи <a class="text-link" id="excel-link">оригинального формата Excel-файла</a> расписания.</p>
+          <p id="empty-note" class="message" hidden></p>
+          <div class="table-wrap" id="table-wrap" hidden></div>
         </div>
-        <div class="week-row">
-          <span class="week-label is-active" id="odd-label">Нечётная</span>
-          <button class="switch" id="week-switch" type="button" role="switch" aria-checked="false" aria-label="Переключить чётность недели"></button>
-          <span class="week-label" id="even-label">Чётная</span>
-        </div>
-        <ul class="legend">
-          <li><i class="dot dot-lecture"></i>Лекция</li>
-          <li><i class="dot dot-practice"></i>Практика</li>
-          <li><i class="dot dot-lab"></i>Лабораторная</li>
-        </ul>
       </div>
-      <p class="notice-banner">Внимание! Отображение расписания на сайте находится в стадии разработки и согласования. Настоятельно рекомендуем периодически перепроверять расписание при помощи <a class="text-link" id="excel-link">оригинального формата Excel-файла</a> расписания.</p>
-      <p id="empty-note" class="message" hidden></p>
-      <div class="table-wrap" id="table-wrap" hidden></div>
     </section>
   </main>
 
@@ -90,6 +100,6 @@
     </div>
   </footer>
   <script src="../schedule/schedule.js?v=6"></script>
-  <script src="../js/schedule-page.js?v=3"></script>
+  <script src="../js/schedule-page.js?v=4"></script>
 </body>
 </html>

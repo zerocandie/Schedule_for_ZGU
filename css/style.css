@@ -301,6 +301,69 @@ h1 {
 
 .board-head { padding-top: 36px; }
 
+.board-layout { margin-top: 16px; }
+
+.group-picker { min-width: 0; }
+
+.group-option {
+  white-space: normal;
+  text-align: center;
+}
+
+@media (min-width: 1100px) {
+  .board-layout {
+    display: grid;
+    grid-template-columns: 300px minmax(0, 1fr);
+    gap: 16px;
+    align-items: start;
+  }
+
+  .filter-rail {
+    position: sticky;
+    top: var(--rail-top, 96px);
+    z-index: 4;
+    max-height: calc(100dvh - var(--rail-top, 96px) - 16px);
+    overflow: auto;
+    padding-right: 4px;
+  }
+
+  .filter-rail .faculty-tabs {
+    grid-template-columns: 1fr;
+    margin-top: 0;
+  }
+
+  .filter-rail .faculty-tab {
+    min-height: 0;
+    padding: 12px 14px;
+  }
+
+  .filter-rail .faculty-tab + .faculty-tab {
+    border-left: 0;
+    border-top: 1px solid rgba(12, 40, 70, 0.12);
+  }
+
+  .filter-rail .toolbar { margin-top: 12px; }
+
+  .filter-rail .toolbar-line {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    gap: 12px;
+  }
+
+  .filter-rail .week-date,
+  .filter-rail .week-count-wrap {
+    justify-self: center;
+    text-align: center;
+  }
+
+  .filter-rail .course-menu { justify-content: center; }
+
+  .board-schedule .table-wrap,
+  .board-schedule .notice-banner { margin-top: 0; }
+
+  .board-schedule .notice-banner { margin-bottom: 16px; }
+}
+
 .faculty-tabs {
   display: grid;
   grid-template-columns: 1fr 1fr;

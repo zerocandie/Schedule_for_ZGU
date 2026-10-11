@@ -57,6 +57,8 @@
   }
 
   var courseMenu = document.getElementById("course-menu");
+  var groupMenu = document.getElementById("group-menu");
+  var groupPicker = document.getElementById("group-picker");
   var tableWrap = document.getElementById("table-wrap");
   var emptyNote = document.getElementById("empty-note");
   var weekSwitch = document.getElementById("week-switch");
@@ -65,6 +67,8 @@
   var oddLabel = document.getElementById("odd-label");
   var evenLabel = document.getElementById("even-label");
   var selectedCourse = null;
+  var selectedGroup = null;
+  var groupFromUrl = params.get("group");
   var selectedParity = "odd";
   var viewedWeek = null;
   var calendar = null;
@@ -80,6 +84,15 @@
     if (!option) return;
     chooseCourse(Number(option.getAttribute("data-course")));
   });
+
+  groupMenu.addEventListener("click", function (event) {
+    var option = event.target.closest(".group-option");
+    if (!option) return;
+    chooseGroup(option.getAttribute("data-group"));
+  });
+
+  syncRailOffset();
+  window.addEventListener("resize", syncRailOffset);
 
   weekSwitch.addEventListener("click", function () {
     showWeek(viewedWeek + (selectedParity === "even" ? -1 : 1));
@@ -138,6 +151,9 @@
 
     if (!courses.length) {
       selectedCourse = null;
+      selectedGroup = null;
+      groupPicker.hidden = true;
+      groupMenu.innerHTML = "";
       tableWrap.hidden = true;
       tableWrap.innerHTML = "";
       emptyNote.hidden = false;
@@ -163,6 +179,14 @@
     }
   }
 
+  function groupsOnCourse() {
+    return slice.filter(function (group) {
+      return Number(group.course) === selectedCourse;
+    }).sort(function (a, b) {
+      return String(a.name).localeCompare(String(b.name), "ru");
+    });
+  }
+
   function chooseCourse(course) {
     selectedCourse = course;
     courseMenu.querySelectorAll(".course-option").forEach(function (option) {
@@ -172,6 +196,41 @@
     });
     var url = new URL(location.href);
     url.searchParams.set("course", String(course));
+    var groups = groupsOnCourse();
+    groupMenu.innerHTML = '<button type="button" class="course-option group-option" data-group="" aria-pressed="false">Общее</button>' +
+      groups.map(function (group) {
+        return '<button type="button" class="course-option group-option" data-group="' + esc(group.name) + '" aria-pressed="false">' + esc(group.name) + "</button>";
+      }).join("");
+    groupPicker.hidden = !groups.length;
+
+    var next = null;
+    if (selectedGroup && groups.some(function (group) { return group.name === selectedGroup; })) next = selectedGroup;
+    if (next === null && groupFromUrl && groups.some(function (group) { return group.name === groupFromUrl; })) next = groupFromUrl;
+    groupFromUrl = null;
+    if (!groups.length) {
+      selectedGroup = null;
+      url.searchParams.delete("group");
+      history.replaceState(null, "", url);
+      tableWrap.hidden = true;
+      tableWrap.innerHTML = "";
+      emptyNote.hidden = false;
+      emptyNote.textContent = "На этом курсе групп нет.";
+      return;
+    }
+    history.replaceState(null, "", url);
+    chooseGroup(next);
+  }
+
+  function chooseGroup(name) {
+    selectedGroup = name || null;
+    groupMenu.querySelectorAll(".group-option").forEach(function (option) {
+      var selected = option.getAttribute("data-group") === (selectedGroup || "");
+      option.classList.toggle("is-selected", selected);
+      option.setAttribute("aria-pressed", selected ? "true" : "false");
+    });
+    var url = new URL(location.href);
+    if (selectedGroup) url.searchParams.set("group", selectedGroup);
+    else url.searchParams.delete("group");
     history.replaceState(null, "", url);
     renderTable();
   }
@@ -224,10 +283,8 @@
 
   // renderTable рисует дни строками, группы - столбцами.
   function renderTable() {
-    var groups = slice.filter(function (group) {
-      return Number(group.course) === selectedCourse;
-    }).sort(function (a, b) {
-      return String(a.name).localeCompare(String(b.name), "ru");
+    var groups = groupsOnCourse().filter(function (group) {
+      return !selectedGroup || group.name === selectedGroup;
     });
 
     if (!groups.length) {
@@ -273,6 +330,13 @@
       (lesson.room ? '<p class="lesson-room">' + esc(lesson.room) + "</p>" : "") +
       (lesson.note ? '<p class="lesson-note">' + esc(lesson.note) + "</p>" : "") +
       "</article>";
+  }
+
+  function syncRailOffset() {
+    var header = document.querySelector(".site-header");
+    if (!header) return;
+    var top = Math.ceil(header.getBoundingClientRect().height) + 12;
+    document.documentElement.style.setProperty("--rail-top", top + "px");
   }
 
   function esc(value) {
