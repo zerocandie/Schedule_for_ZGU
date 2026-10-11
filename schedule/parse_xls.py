@@ -56,6 +56,22 @@ def day_key(value):
     return None
 
 
+def day_calendar(value):
+    # Дата рядом с днём недели - сессионная неделя, пара только на эту дату.
+    text = norm(value)
+    if not day_key(text):
+        return None
+    match = re.search(r"(\d{2})\.(\d{2})\.(\d{4})", text)
+    if not match:
+        return None
+    day, month, year = int(match.group(1)), int(match.group(2)), int(match.group(3))
+    try:
+        week = study_week(year, month, day)
+    except ValueError:
+        return None
+    return week, "{:02d}.{:02d}.{:04d}".format(day, month, year)
+
+
 def clean_group(name):
     name = re.sub(r"\s*-\s*", "-", norm(name))
     return re.sub(r"\s+", " ", name).strip()
@@ -343,9 +359,14 @@ def load_sheet(path, sheet):
     day_col = day_cols[0] if day_cols else 0
     row_day = {}
     row_time = {}
+    row_calendar = {}
     for row in range(header + 1, grid.nrows):
         day_text, _ = cell_text(row, day_col)
         row_day[row] = day_key(day_text)
+        if row_day[row]:
+            stamp = day_calendar(day_text)
+            if stamp:
+                row_calendar[row] = stamp
         clocks = []
         for time_col in time_cols:
             text, _ = cell_text(row, time_col)
@@ -451,6 +472,14 @@ def load_sheet(path, sheet):
                     for key in ("kind", "teacher", "week", "weeks", "note"):
                         if item.get(key):
                             lesson[key] = item[key]
+                    stamp = row_calendar.get(rlo)
+                    if stamp and not lesson.get("weeks"):
+                        lesson.pop("week", None)
+                        lesson["weeks"] = [stamp[0]]
+                        label = stamp[1]
+                        note = lesson.get("note") or ""
+                        if label not in note:
+                            lesson["note"] = (label + "; " + note).strip("; ") if note else label
                     if room:
                         lesson["room"] = room
                     lessons_by_group[group["name"]].append(lesson)
