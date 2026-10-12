@@ -71,6 +71,11 @@ code {
   padding: 14px 0;
 }
 
+.header-inner:has(.freshness) {
+  width: min(1480px, calc(100% - 8px));
+  grid-template-columns: minmax(0, 1.14fr) auto minmax(0, 0.86fr);
+}
+
 .brand {
   display: flex;
   align-items: center;
@@ -81,6 +86,33 @@ code {
 }
 
 .brand-zgu { justify-self: start; }
+
+.header-lead {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  justify-self: start;
+}
+
+.freshness {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: 0;
+  flex: 0 0 auto;
+}
+
+.freshness p {
+  margin: 0;
+  color: #55cefd;
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 1.25;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  text-shadow: 0 0 12px rgba(85, 206, 253, 0.55);
+}
 
 .brand-isit { justify-self: end; }
 
@@ -948,7 +980,8 @@ h1 {
 @media (max-width: 800px) {
   .site-header { padding-top: env(safe-area-inset-top); }
 
-  .header-inner {
+  .header-inner,
+  .header-inner:has(.freshness) {
     grid-template-columns: minmax(0, 1fr) auto;
     grid-template-areas:
       "zgu isit"
@@ -957,10 +990,21 @@ h1 {
     gap: 10px 12px;
   }
 
+  .header-lead,
   .brand-zgu {
     grid-area: zgu;
     max-width: none;
   }
+
+  .header-lead {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  .freshness { margin-left: 56px; }
+
+  .freshness p { white-space: normal; }
 
   .brand-isit { grid-area: isit; }
 
